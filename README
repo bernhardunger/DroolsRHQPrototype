@@ -2,7 +2,10 @@ This repository contains prototype software for testing of Drools rules engine b
 General description of use cases and background information for usage scenarios can be found at [8].
 
 Main goal of the prototype software is the measurement of CPU-utilization and memory-consumption by generation of any (RHQ) system events that are evaluated by the Drools rules engine.
-The project has been developed in an Eclipse IDE, the Eclipse Drools Plugin is useful for editing of DRL files and evaluation of log files and can be downloaded from [1].
+The project has been developed as Maven project in an Eclipse IDE, the Eclipse Drools Plugin is useful for editing of DRL files and evaluation of log files and can be downloaded from [1].
+The root of the project and the POM file are in directory:
+droolsPrototypeSources/
+
 The individual tests are implemented as JUnit-Tests and can be found at:
 src/test/java/de/bernhardunger/drools
 The JMS test suite can be found at:
