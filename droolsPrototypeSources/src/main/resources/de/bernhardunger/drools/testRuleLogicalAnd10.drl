@@ -1,0 +1,272 @@
+package de.bernhardunger.drools;
+
+import de.bernhardunger.drools.model.EventComposite;
+
+dialect "mvel"
+declare EventComposite
+	@role( event )
+    @timestamp( timestamp )
+	@expires( 60m )
+end
+declare ResourceId1  @role( event ) @expires( 60m ) end
+declare EventDetail1  @role( event ) @expires( 60m ) end
+declare ResourceId2  @role( event ) @expires( 60m ) end
+declare EventDetail2  @role( event ) @expires( 60m ) end
+declare ResourceId3  @role( event ) @expires( 60m ) end
+declare EventDetail3  @role( event ) @expires( 60m ) end
+declare ResourceId4  @role( event ) @expires( 60m ) end
+declare EventDetail4  @role( event ) @expires( 60m ) end
+declare ResourceId5  @role( event ) @expires( 60m ) end
+declare EventDetail5  @role( event ) @expires( 60m ) end
+declare ResourceId6  @role( event ) @expires( 60m ) end
+declare EventDetail6  @role( event ) @expires( 60m ) end
+declare ResourceId7  @role( event ) @expires( 60m ) end
+declare EventDetail7  @role( event ) @expires( 60m ) end
+declare ResourceId8  @role( event ) @expires( 60m ) end
+declare EventDetail8  @role( event ) @expires( 60m ) end
+declare ResourceId9  @role( event ) @expires( 60m ) end
+declare EventDetail9  @role( event ) @expires( 60m ) end
+declare ResourceId10  @role( event ) @expires( 60m ) end
+declare EventDetail10  @role( event ) @expires( 60m ) end
+
+rule "rule1"
+when
+	EventComposite( eventDetail == "eventDetail1", resourceId == 1)
+then
+	insertLogical( new ResourceId1() );
+	insertLogical( new EventDetail1() );
+end
+
+rule "ruleTestExists_1_1"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+then
+	System.out.println( "Status ResourceId1-1() and EventDetail1-1()");
+end
+rule "rule2"
+when
+	EventComposite( eventDetail == "eventDetail2", resourceId == 2)
+then
+	insertLogical( new ResourceId2() );
+	insertLogical( new EventDetail2() );
+end
+
+rule "ruleTestExists_1_2"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+    exists ( ResourceId2() ) 
+    exists ( EventDetail2() ) 
+then
+	System.out.println( "Status ResourceId1-2() and EventDetail1-2()");
+end
+rule "rule3"
+when
+	EventComposite( eventDetail == "eventDetail3", resourceId == 3)
+then
+	insertLogical( new ResourceId3() );
+	insertLogical( new EventDetail3() );
+end
+
+rule "ruleTestExists_1_3"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+    exists ( ResourceId2() ) 
+    exists ( EventDetail2() ) 
+    exists ( ResourceId3() ) 
+    exists ( EventDetail3() ) 
+then
+	System.out.println( "Status ResourceId1-3() and EventDetail1-3()");
+end
+rule "rule4"
+when
+	EventComposite( eventDetail == "eventDetail4", resourceId == 4)
+then
+	insertLogical( new ResourceId4() );
+	insertLogical( new EventDetail4() );
+end
+
+rule "ruleTestExists_1_4"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+    exists ( ResourceId2() ) 
+    exists ( EventDetail2() ) 
+    exists ( ResourceId3() ) 
+    exists ( EventDetail3() ) 
+    exists ( ResourceId4() ) 
+    exists ( EventDetail4() ) 
+then
+	System.out.println( "Status ResourceId1-4() and EventDetail1-4()");
+end
+rule "rule5"
+when
+	EventComposite( eventDetail == "eventDetail5", resourceId == 5)
+then
+	insertLogical( new ResourceId5() );
+	insertLogical( new EventDetail5() );
+end
+
+rule "ruleTestExists_1_5"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+    exists ( ResourceId2() ) 
+    exists ( EventDetail2() ) 
+    exists ( ResourceId3() ) 
+    exists ( EventDetail3() ) 
+    exists ( ResourceId4() ) 
+    exists ( EventDetail4() ) 
+    exists ( ResourceId5() ) 
+    exists ( EventDetail5() ) 
+then
+	System.out.println( "Status ResourceId1-5() and EventDetail1-5()");
+end
+rule "rule6"
+when
+	EventComposite( eventDetail == "eventDetail6", resourceId == 6)
+then
+	insertLogical( new ResourceId6() );
+	insertLogical( new EventDetail6() );
+end
+
+rule "ruleTestExists_1_6"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+    exists ( ResourceId2() ) 
+    exists ( EventDetail2() ) 
+    exists ( ResourceId3() ) 
+    exists ( EventDetail3() ) 
+    exists ( ResourceId4() ) 
+    exists ( EventDetail4() ) 
+    exists ( ResourceId5() ) 
+    exists ( EventDetail5() ) 
+    exists ( ResourceId6() ) 
+    exists ( EventDetail6() ) 
+then
+	System.out.println( "Status ResourceId1-6() and EventDetail1-6()");
+end
+rule "rule7"
+when
+	EventComposite( eventDetail == "eventDetail7", resourceId == 7)
+then
+	insertLogical( new ResourceId7() );
+	insertLogical( new EventDetail7() );
+end
+
+rule "ruleTestExists_1_7"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+    exists ( ResourceId2() ) 
+    exists ( EventDetail2() ) 
+    exists ( ResourceId3() ) 
+    exists ( EventDetail3() ) 
+    exists ( ResourceId4() ) 
+    exists ( EventDetail4() ) 
+    exists ( ResourceId5() ) 
+    exists ( EventDetail5() ) 
+    exists ( ResourceId6() ) 
+    exists ( EventDetail6() ) 
+    exists ( ResourceId7() ) 
+    exists ( EventDetail7() ) 
+then
+	System.out.println( "Status ResourceId1-7() and EventDetail1-7()");
+end
+rule "rule8"
+when
+	EventComposite( eventDetail == "eventDetail8", resourceId == 8)
+then
+	insertLogical( new ResourceId8() );
+	insertLogical( new EventDetail8() );
+end
+
+rule "ruleTestExists_1_8"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+    exists ( ResourceId2() ) 
+    exists ( EventDetail2() ) 
+    exists ( ResourceId3() ) 
+    exists ( EventDetail3() ) 
+    exists ( ResourceId4() ) 
+    exists ( EventDetail4() ) 
+    exists ( ResourceId5() ) 
+    exists ( EventDetail5() ) 
+    exists ( ResourceId6() ) 
+    exists ( EventDetail6() ) 
+    exists ( ResourceId7() ) 
+    exists ( EventDetail7() ) 
+    exists ( ResourceId8() ) 
+    exists ( EventDetail8() ) 
+then
+	System.out.println( "Status ResourceId1-8() and EventDetail1-8()");
+end
+rule "rule9"
+when
+	EventComposite( eventDetail == "eventDetail9", resourceId == 9)
+then
+	insertLogical( new ResourceId9() );
+	insertLogical( new EventDetail9() );
+end
+
+rule "ruleTestExists_1_9"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+    exists ( ResourceId2() ) 
+    exists ( EventDetail2() ) 
+    exists ( ResourceId3() ) 
+    exists ( EventDetail3() ) 
+    exists ( ResourceId4() ) 
+    exists ( EventDetail4() ) 
+    exists ( ResourceId5() ) 
+    exists ( EventDetail5() ) 
+    exists ( ResourceId6() ) 
+    exists ( EventDetail6() ) 
+    exists ( ResourceId7() ) 
+    exists ( EventDetail7() ) 
+    exists ( ResourceId8() ) 
+    exists ( EventDetail8() ) 
+    exists ( ResourceId9() ) 
+    exists ( EventDetail9() ) 
+then
+	System.out.println( "Status ResourceId1-9() and EventDetail1-9()");
+end
+rule "rule10"
+when
+	EventComposite( eventDetail == "eventDetail10", resourceId == 10)
+then
+	insertLogical( new ResourceId10() );
+	insertLogical( new EventDetail10() );
+end
+
+rule "ruleTestExists_1_10"
+when
+    exists ( ResourceId1() ) 
+    exists ( EventDetail1() ) 
+    exists ( ResourceId2() ) 
+    exists ( EventDetail2() ) 
+    exists ( ResourceId3() ) 
+    exists ( EventDetail3() ) 
+    exists ( ResourceId4() ) 
+    exists ( EventDetail4() ) 
+    exists ( ResourceId5() ) 
+    exists ( EventDetail5() ) 
+    exists ( ResourceId6() ) 
+    exists ( EventDetail6() ) 
+    exists ( ResourceId7() ) 
+    exists ( EventDetail7() ) 
+    exists ( ResourceId8() ) 
+    exists ( EventDetail8() ) 
+    exists ( ResourceId9() ) 
+    exists ( EventDetail9() ) 
+    exists ( ResourceId10() ) 
+    exists ( EventDetail10() ) 
+then
+	System.out.println( "Status ResourceId1-10() and EventDetail1-10()");
+end
+

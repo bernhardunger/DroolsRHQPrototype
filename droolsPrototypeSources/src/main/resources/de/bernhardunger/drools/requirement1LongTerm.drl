@@ -1,0 +1,67 @@
+package de.bernhardunger.drools;
+import java.util.Date;
+import de.bernhardunger.drools.model.EventComposite;
+import de.bernhardunger.drools.model.RuleResult;
+
+dialect "mvel"
+
+declare EventComposite
+    @role( event )
+    @timestamp( timestamp )
+	@expires( 60m )
+end
+
+declare DBConnectionInUse
+    @role( event )
+    @expires( 60m )
+end
+
+/* Rule checks if a database connection is in use and inserts a logical event */
+rule "db connection in use"
+when
+	$event : EventComposite( eventDetail == "db connection in use" )
+	exists ( EventComposite( eventDetail == "db connection in use", this != $event ) over window:time( 60m ) )
+then
+	insertLogical( new DBConnectionInUse() );
+	System.out.println( "db connection in use" );
+end
+
+/* 
+ Create application server down status if two server are down 
+ and no database connection is in use 		
+*/
+rule "AppServerDownCount"
+when
+   	$n : Number(intValue > 2) from accumulate( 
+           $event : EventComposite( eventDetail == "app server is down" ),
+           count( $event ) ) 
+     not ( DBConnectionInUse()  over window:time( 60m ) )
+then
+    System.out.println( $n + " appserver are not available and no db connection is in use" );
+end
+
+/* 
+ Create application server ok status if at least five server are up 
+ and at least one database connection is in use 		
+*/
+rule "AppServerOK"
+when
+   	$n : Number(intValue >= 5) from accumulate( 
+           $event : EventComposite( eventDetail == "app server is up" ),
+           count( $event ) ) 
+     exists ( DBConnectionInUse() over window:time( 60m ) ) 
+then
+    System.out.println( $n + " appserver are available and at least one db connection is in use" );
+end
+
+/* 
+ Create application server failure status if 25 percent of the app server are down 
+*/
+rule "AppServerDownPercent"
+when
+   	$n :  Number(intValue >= (( 8 / 100 ) * 25) ) from accumulate( 
+           $event : EventComposite( eventDetail == "app server is down" ),
+           count( $event ) )  
+then
+   System.out.println( "At least 25 percent of appserver are down" );
+end

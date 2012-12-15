@@ -1,0 +1,31 @@
+This repository contains prototype software for testing of Drools rules engine behavior.
+General description of use cases and background information for usage scenarios can be found at [8].
+
+Main goal of the prototype software is the measurement of CPU-utilization and memory-consumption by generation of any (RHQ) system events that are evaluated by the Drools rules engine.
+The project has been developed in an Eclipse IDE, the Eclipse Drools Plugin is useful for editing of DRL files and evaluation of log files and can be downloaded from [1].
+The individual tests are implemented as JUnit-Tests and can be found at:
+src/test/java/de/bernhardunger/drools
+The JMS test suite can be found at:
+src/test/java/de/bernhardunger/drools/jms
+Note: The JMS tests need a JMS provider like ActiveMQ [7]. 
+Drools rules DRL files are located in:
+src/main/resources/de/bernhardunger/drools
+
+An example configuration of the JMS provider and useful batch files for the integration of the test suites on a windows platform can be found in: 
+
+doc/activemq.xml
+doc/start_activemq.bat
+doc/start_cmd.bat
+doc/start_eclipse.bat
+doc/startDemo.bat
+
+Useful links:
+[1] Eclipse Drools Plugins:	http://download.jboss.org/drools/release/5.4.0.Final/org.drools.updatesite/
+[2] Drools Project: http://www.jboss.org/drools
+[3] Drools Expert User Guide V 5.4.0. Final: http://docs.jboss.org/drools/release/5.4.0.Final/drools-expert-docs/pdf/drools-expert-docs.pdf
+[4] Drools Fusion User Guide V 5.4.0 Final. URL: http://docs.jboss.org/drools/release/5.4.0.Final/drools-fusion-docs/pdf/drools-fusion-docs.pdf
+[5] Drools-Guvnor: http://www.jboss.org/drools/drools-guvnor
+[6] Luckham D. A Short History of CEP. URL: http://complexevents.com/wp-content/uploads/2008/02/1-a-short-history-of-cep-part-1.pdf
+[7] JMS-Provider AqtiveMQ: http://activemq.apache.org/
+[8] Correlation Units for RHQ: https://docs.jboss.org/author/display/RHQ/Correlation+Units
+

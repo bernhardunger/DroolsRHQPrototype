@@ -1,0 +1,55 @@
+package de.bernhardunger.drools;
+
+import de.bernhardunger.drools.model.EventComposite;
+
+dialect "mvel"
+declare EventComposite
+    @role( event )
+    @timestamp( timestamp )
+	@expires( 60m )
+end
+
+declare HTTPConnectionInUse
+    @role( event )
+end
+
+declare DBConnectionInUse
+    @role( event )
+end
+
+
+rule "http connection in use"
+when
+	exists ( EventComposite( eventDetail == "http connection in use" ) over window:time( 10m ) )  
+then
+	insertLogical( new HTTPConnectionInUse() );
+	//System.out.println( "There are instances of http connection in use" );
+end
+
+
+rule "db connection in use"
+when
+	$event : EventComposite( eventDetail == "db connection in use" )
+	exists ( EventComposite( eventDetail == "db connection in use", this != $event ) over window:time( 10m ) )
+then
+	insertLogical( new DBConnectionInUse() );
+	//System.out.println( "There are  db connection in use" );
+end
+
+rule "webshop is in status error"
+when
+	exists ( HTTPConnectionInUse() )
+	not ( DBConnectionInUse() )
+then
+	System.out.println( "webshop is in status error" );
+end
+
+rule "webshop is in status OK"
+
+when
+	exists ( HTTPConnectionInUse() )
+	exists ( DBConnectionInUse() )
+then
+	System.out.println( "webshop is in status OK" );
+end
+

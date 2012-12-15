@@ -1,0 +1,196 @@
+package de.bernhardunger.drools;
+
+import de.bernhardunger.drools.model.EventComposite;
+import de.bernhardunger.drools.model.ProcessCount;
+//import de.bernhardunger.drools.model.HTTPStatusWarning;
+
+dialect "mvel"
+declare EventComposite
+    @role( event )
+    @timestamp( timestamp )
+	@expires( 60m )
+end
+
+declare HTTPConnectionInUse
+    @role( event )
+end
+
+declare DBConnectionInUse
+    @role( event )
+end
+
+declare HTTPConnectionWarning
+    @role( event )
+end
+
+rule "http connection in use"
+when
+	exists ( EventComposite( eventDetail == "http connection in use" ) over window:time( 10m ) )  
+then
+	insertLogical( new HTTPConnectionInUse() );
+	//System.out.println( "There are  instances of http connection in use" );
+end
+
+
+rule "db connection in use"
+when
+	$event : EventComposite( eventDetail == "db connection in use" )
+	exists ( EventComposite( eventDetail == "db connection in use", this != $event ) over window:time( 10m ) )
+then
+	insertLogical( new DBConnectionInUse() );
+	//System.out.println( "There are  db connection in use" );
+end
+
+rule "webshop is in status error"
+when
+	exists ( HTTPConnectionInUse() )
+	not ( DBConnectionInUse() )
+then
+	System.out.println( "webshop is in status error" );
+end
+
+rule "webshop is in status OK"
+
+when
+	exists ( HTTPConnectionInUse() )
+	exists ( DBConnectionInUse() )
+then
+	System.out.println( "webshop is in status OK" );
+end
+
+/*
+rule "http connection in use"
+when
+	$event : EventComposite( $eventDetail : eventDetail )
+	Number( $count : intValue > 0 ) from accumulate(
+                  $i : EventComposite( this.eventDetail == "http connection in use", this != $event ),
+                   count( $i ) ) 
+    not HTTPConnectionInUse() 
+then
+	  insert( new HTTPConnectionInUse() );
+	  System.out.println( "There are " + $count + " instances of http connection in use" );
+	  //   retract($event);
+end
+*/
+
+
+/*
+rule "Webshop error"
+    when
+    	$event : EventComposite( $eventDetail : eventDetail )
+		Number( $count : intValue == 0 ) from accumulate(
+                  $i : EventComposite( this.eventDetail == "outgoing db connection in use", this != $event ),
+                   count( $i ) ) 
+        exists( HTTPConnectionInUse() ) 
+        not WebshopError() 
+    then
+       insert( new WebshopError() );
+       //  retract($event);
+       System.out.println("Webshop is in status error");
+end
+*/
+
+/*
+rule "Webshop changed from Error to OK"
+    when
+    	$event : EventComposite( $eventDetail : eventDetail )
+		Number( $outgoingDBConn : intValue > 0 ) from accumulate(
+                  $i : EventComposite( this.eventDetail == "outgoing db connection in use", this != $event ),
+                   count( $i ) ) 
+        Number( $httpConn : intValue > 0 ) from accumulate(
+                  $i : EventComposite( this.eventDetail == "http connection in use", this != $event ),
+                   count( $i ) ) 
+        exists ( WebshopError() )
+        not WebshopOK()
+    then
+       insert( new WebshopOK() );
+       System.out.println("Webshop Status changed from status Error to OK");
+end
+*/
+/*
+rule "HTTP Connection warning"
+    when
+        exists( HTTPStatusWarning() ) 
+    then
+        System.out.println("Warning: Webshop has status warning");
+end
+*/
+/*
+rule "DB connections"
+    when
+    	$event : EventComposite( $eventDetail : eventDetail )
+		Number( $count : intValue ) from accumulate(
+                  $i : EventComposite( this.eventDetail == "outgoing db connection in use", this != $event ),
+                   count( $i ) ) 
+    then
+        //System.out.println("There are " + $count + " instances of db connection in use");
+end
+*/
+
+
+
+/**
+
+when
+>> >     $p : Process( $name : eventDetail )
+>> >     not( ProcessCount( eventDetail == $name ) )
+>> >     Number( $count : intValue) from accumulate(
+>> >                  $i : Process( eventDetail == $name, this != $p ),
+>> >                   count( $i ) )
+>> > then
+>> >    System.out.println( "There are "+$count+" instances of processes
+>> > named "+$name );
+>> >    insert( new ProcessCount( $name, $count ) );
+>> > end                count( $i ) )
+*/
+/*
+rule "all events"
+when
+	$event : EventComposite()
+then
+    System.out.println("Event: " + $event);
+end
+*/
+/*
+rule "all events of severity FATAL"
+when
+	$event : EventComposite( this.severity.toString == "FATAL" )
+then
+    System.out.println("Event: " + $event);
+end
+*/
+/*
+rule "events not in between the last 10 minutes"
+when
+	$eventA : EventComposite(  ) 
+	not EventComposite( this.resourceId == $eventA.resourceId  ) over window:time( 10m )
+		
+then
+    System.out.println("Event not in between the last 10 minutes: " + $eventA);
+end
+*/
+/*
+rule "events in between last 10 minutes"
+no-loop true
+when
+	$event1 : EventComposite() 
+	$event2 : EventComposite( this.eventId != $event1.eventId) over window:time(10m)
+then
+    System.out.println("Event in between the last 10 minutes:: " + $event2);
+    //retract($event2);
+   
+end
+*/
+/*
+rule "Props"
+    when
+        $e1 : EventComposite() 
+        $e2 : EventComposite( this after $e1) 
+        // no event in between $E1 and $E2
+        not (EventComposite(this after $e1, this before $e2))
+        // no event after $E2 ($E2 is the last)
+        not (EventComposite(this after $e2) )
+    then
+        System.out.println("Events: " + $e2);
+end
+*/
