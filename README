@@ -6,11 +6,12 @@ The project has been developed as Maven project in an Eclipse IDE, the Eclipse D
 The root of the project and the POM file are in directory:
 droolsPrototypeSources/
 
+A Jconsole for measurements will be diplayed before the tests start.
 The individual tests are implemented as JUnit-Tests and can be found at:
 src/test/java/de/bernhardunger/drools
 The JMS test suite can be found at:
 src/test/java/de/bernhardunger/drools/jms
-Note: The JMS tests need a JMS provider like ActiveMQ [7]. 
+Note: The JMS tests need a JMS provider like ActiveMQ running on localhost [7]. 
 Drools rules DRL files are located in:
 src/main/resources/de/bernhardunger/drools
 
@@ -23,6 +24,7 @@ doc/start_eclipse.bat
 doc/startDemo.bat
 
 Useful links:
+
 [1] Eclipse Drools Plugins:	http://download.jboss.org/drools/release/5.4.0.Final/org.drools.updatesite/
 
 [2] Drools Project: http://www.jboss.org/drools
